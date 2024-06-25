@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (visitCount >= 5) {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
-        } else if (hour >= 7 && hour < 20 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
+        } else if (hour >= 7 && hour < 21 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
             visitButton.style.display = "block";
             messageDiv.textContent = "";
         } else {
@@ -37,18 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    window.visitStake = () => {
+    visitButton.addEventListener('click', () => {
         visitCount += 1;
         localStorage.setItem('visitCount', visitCount);
         localStorage.setItem('lastVisit', new Date().toISOString());
         updateCounter();
-    };
+        window.location.href = 'https://www.stake.com';
+    });
 
-    window.resetVisitCount = () => {
+    resetButton.addEventListener('click', () => {
         visitCount = 0;
         localStorage.setItem('visitCount', visitCount);
         updateCounter();
-    };
+    });
 
     updateCounter();
     checkButtonVisibility();
