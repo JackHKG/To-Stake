@@ -1,1 +1,27 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Example</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PWA with Time and Visit Restrictions</h1>
+    <div id="message"></div>
+    <div class="button-container">
+        <button id="visit-button" style="display:none;" onclick="window.location.href='https://www.stake.com';">Go to Stake</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
