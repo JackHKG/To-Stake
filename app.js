@@ -25,11 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const hour = now.getHours();
         const minute = now.getMinutes();
 
-	if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
-		} else {
-			messageDiv.textContent = "Outside Time";
-        	}	
-
 	    
 	if (visitCount >= 5) {
             messageDiv.textContent = "已夠數";
