@@ -1,6 +1,6 @@
 {
-    "name": "PWA Example",
-    "short_name": "PWA",
+    "name": "To Stake",
+    "short_name": "To Stake",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#ffffff",
