@@ -29,11 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (visitCount >= 5) {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
-		if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
-		} else {
-			messageDiv.textContent = "Outside Time";
-           		visitButton.style.display = "none";
-        	}	
         } else if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
             visitButton.style.display = "block";
             messageDiv.textContent = "";
@@ -42,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
             visitButton.style.display = "none";
         }
     };
+
+	if (visitCount <=5 && hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
+		} else {
+			messageDiv.textContent = "Outside Time";
+           		visitButton.style.display = "none";
+        	}	
 
 
     visitButton.addEventListener('click', () => {
