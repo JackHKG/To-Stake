@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const visitButton = document.getElementById('visit-button');
     const messageDiv = document.getElementById('message');
+    const counterDiv = document.getElementById('counter');
+    const resetButton = document.getElementById('reset-button');
 
     const resetTime = new Date();
     resetTime.setUTCHours(23, 0, 0, 0); // 7 AM HKT is 23:00 UTC of the previous day
@@ -14,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('lastVisit', new Date().toISOString());
     }
 
+    const updateCounter = () => {
+        counterDiv.textContent = `Visit Count Today: ${visitCount}`;
+    };
+
     const checkButtonVisibility = () => {
         const now = new Date();
         const hour = now.getHours();
@@ -25,17 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
             visitButton.style.display = "block";
             messageDiv.textContent = "";
-            visitButton.addEventListener('click', () => {
-                visitCount += 1;
-                localStorage.setItem('visitCount', visitCount);
-                localStorage.setItem('lastVisit', new Date().toISOString());
-            });
         } else {
             messageDiv.textContent = "Outside Time";
             visitButton.style.display = "none";
         }
     };
 
+    window.visitStake = () => {
+        visitCount += 1;
+        localStorage.setItem('visitCount', visitCount);
+        localStorage.setItem('lastVisit', new Date().toISOString());
+        updateCounter();
+    };
+
+    window.resetVisitCount = () => {
+        visitCount = 0;
+        localStorage.setItem('visitCount', visitCount);
+        updateCounter();
+    };
+
+    updateCounter();
     checkButtonVisibility();
     setInterval(checkButtonVisibility, 60000); // Check every minute
 });
