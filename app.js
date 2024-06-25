@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
 		} else {
 			messageDiv.textContent = "Outside Time";
-           		visitButton.style.display = "none";
         	}	
 
 	    
