@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const visitButton = document.getElementById('visit-button');
     const messageDiv = document.getElementById('message');
     const counterDiv = document.getElementById('counter');
+    const countdownDiv = document.getElementById('countdown');
 
     const resetTime = new Date();
     resetTime.setUTCHours(23, 0, 0, 0); // 7 AM HKT is 23:00 UTC of the previous day
@@ -19,6 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
         counterDiv.textContent = `Visit Count Today: ${visitCount}`;
     };
 
+    const startCountdown = () => {
+        let countdown = 10;
+        countdownDiv.style.display = 'block';
+        countdownDiv.textContent = `Countdown: ${countdown}`;
+        
+        const countdownInterval = setInterval(() => {
+            countdown -= 1;
+            countdownDiv.textContent = `Countdown: ${countdown}`;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                countdownDiv.style.display = 'none';
+                if (visitCount < 5) {
+                    visitButton.style.display = 'block';
+                }
+            }
+        }, 1000);
+    };
+
     const checkButtonVisibility = () => {
         const now = new Date();
         const hour = now.getHours();
@@ -28,11 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
         } else if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
-            visitButton.style.display = "block";
             messageDiv.textContent = "";
+            startCountdown();
         } else {
             messageDiv.textContent = "Outside Time";
             visitButton.style.display = "none";
+            countdownDiv.style.display = 'none';
         }
     };
 
@@ -41,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('visitCount', visitCount);
         localStorage.setItem('lastVisit', new Date().toISOString());
         updateCounter();
-        window.location.href = 'https://stake.com/casino/games/evolution-stake-exclusive-speed-baccarat-1';
+        window.location.href = 'https://www.stake.com';
     });
 
     updateCounter();
