@@ -42,12 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkButtonVisibility = () => {
         const now = new Date();
         const hour = now.getHours();
-        const minute = now.getMinutes();
 
         if (visitCount >= 5) {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
-        } else if (hour >= 7 && hour < 11 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
+        } else if (hour >= 6 && hour < 12 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
             messageDiv.textContent = "";
             startCountdown();
         } else {
@@ -62,8 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('visitCount', visitCount);
         localStorage.setItem('lastVisit', new Date().toISOString());
         updateCounter();
-        window.location.href = 'https://stake.com/casino/games/limbo
-        ';
+        window.location.href = 'https://www.stake.com';
     });
 
     updateCounter();
