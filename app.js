@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
                 countdownDiv.style.display = 'none';
-                if (visitCount < 5) {
+                if (visitCount < 10) {
                     visitButton.style.display = 'block';
                 }
             }
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const now = new Date();
         const hour = now.getHours();
 
-        if (visitCount >= 5) {
+        if (visitCount >= 10) {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
         } else if (hour >= 6 && hour < 12 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
