@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('visitCount', visitCount);
         localStorage.setItem('lastVisit', new Date().toISOString());
         updateCounter();
-        window.location.href = 'https://www.stake.com';
+        window.location.href = 'https://stake.com/casino/games/limbo';
     });
 
     updateCounter();
