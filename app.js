@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         visitCount += 1;
         localStorage.setItem('visitCount', visitCount);
         updateCounter();
-        window.location.href = 'https://www.stake.com/';
+        window.location.href = 'https://stake.com/casino/games/evolution-stake-exclusive-speed-baccarat-1';
     });
 
     updateCounter();
