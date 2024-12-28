@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const now = new Date();
         const hour = now.getHours();
 
-        if (visitCount >= 5) {
+        if (visitCount >= 3) {
             messageDiv.textContent = "已夠數";
             visitButton.style.display = "none";
-        } else if (hour >= 6 && hour < 12) { // Local time (adjusted for HKT)
+        } else if (hour >= 7 && hour < 12) { // Local time (adjusted for HKT)
             messageDiv.textContent = "";
             startCountdown();
         } else {
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const now = new Date();
         const lastReset = new Date(localStorage.getItem('lastReset') || 0);
         const hktOffset = 8 * 60; // HKT is UTC+8
-        const resetHour = 7; // 7 AM HKT
+        const resetHour = 6; // 7 AM HKT
 
         const nowUTCMinutes = now.getUTCMinutes() + now.getUTCHours() * 60;
         const resetUTCMinutes = resetHour * 60;
