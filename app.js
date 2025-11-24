@@ -30,12 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Withdraw button – Always open
     withdrawBtn.addEventListener("click", () => {
-        window.location.href = "https://www.stake.com/withdraw";
+        window.location.href = "https://www.stake.com/?tab=overview&currency=usdt&modal=wallet";
     });
 
     // Stake button – Time restricted
     stakeBtn.addEventListener("click", () => {
-        window.location.href = "https://www.stake.com";
+        window.location.href = "https://stake.com/casino/games/evolution-baccarat-lobby/play?mode=real";
     });
 
     checkStakeAvailability();
