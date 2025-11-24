@@ -1,70 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const visitButton = document.getElementById('visit-button');
-    const messageDiv = document.getElementById('message');
-    const counterDiv = document.getElementById('counter');
-    const countdownDiv = document.getElementById('countdown');
+    const stakeBtn = document.getElementById("stakeBtn");
+    const withdrawBtn = document.getElementById("withdrawBtn");
+    const statusDiv = document.getElementById("status");
 
-    const resetTime = new Date();
-    resetTime.setUTCHours(23, 0, 0, 0); // 7 AM HKT is 23:00 UTC of the previous day
+    function checkStakeAvailability() {
+        const now = new Date();
 
-    let visitCount = localStorage.getItem('visitCount') ? parseInt(localStorage.getItem('visitCount')) : 0;
-    let lastVisit = localStorage.getItem('lastVisit') ? new Date(localStorage.getItem('lastVisit')) : new Date(0);
+        // Convert user local time → HKT (UTC+8)
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const hkt = new Date(utc + 8 * 60 * 60000);
 
-    if (new Date() >= resetTime) {
-        visitCount = 0;
-        localStorage.setItem('visitCount', visitCount);
-        localStorage.setItem('lastVisit', new Date().toISOString());
+        const hour = hkt.getHours();
+
+        // Allowed hours: 11:00–11:59 and 23:00–23:59
+        const isOpen =
+            (hour === 11) ||
+            (hour === 23);
+
+        if (isOpen) {
+            stakeBtn.disabled = false;
+            statusDiv.textContent = "Stake: Open Now";
+            statusDiv.style.color = "green";
+        } else {
+            stakeBtn.disabled = true;
+            statusDiv.textContent = "Stake: Closed (Only 11AM–12NN & 11PM–12MN)";
+            statusDiv.style.color = "red";
+        }
     }
 
-    const updateCounter = () => {
-        counterDiv.textContent = `Visit Count Today: ${visitCount}`;
-    };
-
-    const startCountdown = () => {
-        let countdown = 10;
-        countdownDiv.style.display = 'block';
-        countdownDiv.textContent = `Countdown: ${countdown}`;
-        
-        const countdownInterval = setInterval(() => {
-            countdown -= 1;
-            countdownDiv.textContent = `Countdown: ${countdown}`;
-            
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                countdownDiv.style.display = 'none';
-                if (visitCount < 5) {
-                    visitButton.style.display = 'block';
-                }
-            }
-        }, 1000);
-    };
-
-    const checkButtonVisibility = () => {
-        const now = new Date();
-        const hour = now.getHours();
-
-        if (visitCount >= 5) {
-            messageDiv.textContent = "已夠數";
-            visitButton.style.display = "none";
-        } else if (hour >= 6 && hour < 12 && now.getTimezoneOffset() === -480) { // HKT is UTC+8 (480 minutes)
-            messageDiv.textContent = "";
-            startCountdown();
-        } else {
-            messageDiv.textContent = "Outside Time";
-            visitButton.style.display = "none";
-            countdownDiv.style.display = 'none';
-        }
-    };
-
-    visitButton.addEventListener('click', () => {
-        visitCount += 1;
-        localStorage.setItem('visitCount', visitCount);
-        localStorage.setItem('lastVisit', new Date().toISOString());
-        updateCounter();
-        window.location.href = 'https://www.stake.com';
+    // Withdraw button – Always open
+    withdrawBtn.addEventListener("click", () => {
+        window.location.href = "https://www.stake.com/withdraw";
     });
 
-    updateCounter();
-    checkButtonVisibility();
-    setInterval(checkButtonVisibility, 60000); // Check every minute
+    // Stake button – Time restricted
+    stakeBtn.addEventListener("click", () => {
+        window.location.href = "https://www.stake.com";
+    });
+
+    checkStakeAvailability();
+    setInterval(checkStakeAvailability, 30000); // refresh every 30s
 });
