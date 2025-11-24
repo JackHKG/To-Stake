@@ -1,92 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Stake Control Panel</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 18vh;
-        }
-        h1 {
-            margin-bottom: 40px;
-        }
-        button {
-            padding: 15px 35px;
-            font-size: 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 12px;
-            background: black;
-            color: white;
-            cursor: pointer;
-        }
-        button:disabled {
-            background: gray;
-            cursor: not-allowed;
-        }
-        .note {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stake Control</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 80px;
+    }
+    button {
+        padding: 15px 25px;
+        margin: 15px;
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    #stakeBtn { background: #28a745; color: white; }
+    #withdrawBtn { background: #007bff; color: white; }
+    #status {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
 </head>
-
 <body>
-    <h1>Stake Access Panel</h1>
 
-    <!-- Buttons -->
-    <button id="stakeBtn">To Stake</button><br>
-    <button id="withdrawBtn">Withdraw</button>
+<h1>Stake Access Panel</h1>
 
-    <div id="msg" class="note"></div>
+<button id="stakeBtn">Go to Stake</button>
+<br>
+<button id="withdrawBtn">Withdraw</button>
 
-    <script>
-        function checkTimePermission() {
-            const now = new Date();
+<div id="status"></div>
 
-            // Convert system time to HKT
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const hkt = new Date(utc + (8 * 3600000)); // UTC+8
+<script src="app.js"></script>
 
-            const hour = hkt.getHours();
-            const minute = hkt.getMinutes();
-
-            // Only 11:00 AM or 11:00 PM allowed
-            const allowed =
-                (hour === 11 && minute === 0) || 
-                (hour === 23 && minute === 0);
-
-            const msg = document.getElementById("msg");
-            const stakeBtn = document.getElementById("stakeBtn");
-            const withdrawBtn = document.getElementById("withdrawBtn");
-
-            if (allowed) {
-                stakeBtn.disabled = false;
-                withdrawBtn.disabled = false;
-                msg.textContent = "";
-            } else {
-                stakeBtn.disabled = true;
-                withdrawBtn.disabled = true;
-                msg.textContent = "Outside Time — Opens only at 11AM & 11PM HKT";
-            }
-        }
-
-        // Button actions
-        document.getElementById("stakeBtn").addEventListener("click", () => {
-            window.location.href = "https://www.stake.com";
-        });
-
-        document.getElementById("withdrawBtn").addEventListener("click", () => {
-            window.location.href = "https://www.stake.com/withdraw";
-        });
-
-        // Run once and then check every 10 seconds
-        checkTimePermission();
-        setInterval(checkTimePermission, 10000);
-    </script>
 </body>
 </html>
