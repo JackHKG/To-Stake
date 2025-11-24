@@ -1,49 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-    <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>To Stake</title>
-    <link rel="manifest" href="manifest.json">
+    <title>Stake Control Panel</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 20%;
+            margin-top: 18vh;
         }
-        .button-container {
+        h1 {
+            margin-bottom: 40px;
+        }
+        button {
+            padding: 15px 35px;
+            font-size: 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            background: black;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+        .note {
             margin-top: 20px;
-        }
-        #counter {
-            font-size: 20px;
-            margin: 20px 0;
-        }
-        #countdown {
-            font-size: 20px;
-            margin: 20px 0;
+            font-size: 18px;
         }
     </style>
 </head>
+
 <body>
-    <h1>記住，你係咪真係想還清債務？</h1>
-    <h1><div id="message">Outside Time</div></h1>
-    <div id="counter"></div>
-    <div id="countdown" style="display:none;">Countdown: 10</div>
-    <div class="button-container">
-        <center><button id="visit-button" style="display:none;">Go to Stake</button></center>
-    </div>
-    <script src="app.js"></script>
+    <h1>Stake Access Panel</h1>
+
+    <!-- Buttons -->
+    <button id="stakeBtn">To Stake</button><br>
+    <button id="withdrawBtn">Withdraw</button>
+
+    <div id="msg" class="note"></div>
+
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(error) {
-                    console.log('ServiceWorker registration failed: ', error);
-                });
-            });
+        function checkTimePermission() {
+            const now = new Date();
+
+            // Convert system time to HKT
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const hkt = new Date(utc + (8 * 3600000)); // UTC+8
+
+            const hour = hkt.getHours();
+            const minute = hkt.getMinutes();
+
+            // Only 11:00 AM or 11:00 PM allowed
+            const allowed =
+                (hour === 11 && minute === 0) || 
+                (hour === 23 && minute === 0);
+
+            const msg = document.getElementById("msg");
+            const stakeBtn = document.getElementById("stakeBtn");
+            const withdrawBtn = document.getElementById("withdrawBtn");
+
+            if (allowed) {
+                stakeBtn.disabled = false;
+                withdrawBtn.disabled = false;
+                msg.textContent = "";
+            } else {
+                stakeBtn.disabled = true;
+                withdrawBtn.disabled = true;
+                msg.textContent = "Outside Time — Opens only at 11AM & 11PM HKT";
+            }
         }
+
+        // Button actions
+        document.getElementById("stakeBtn").addEventListener("click", () => {
+            window.location.href = "https://www.stake.com";
+        });
+
+        document.getElementById("withdrawBtn").addEventListener("click", () => {
+            window.location.href = "https://www.stake.com/withdraw";
+        });
+
+        // Run once and then check every 10 seconds
+        checkTimePermission();
+        setInterval(checkTimePermission, 10000);
     </script>
-    <h1>記住，你係咪真係想還清債務？</h1>
 </body>
 </html>
