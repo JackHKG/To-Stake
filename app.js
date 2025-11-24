@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             statusDiv.textContent = "Closed (Only 11AM–12NN & 11PM–12MN)";
             statusDiv.style.color = "red";
         }
-    }
+    
 
     // Withdraw button – Always open
     withdrawBtn.addEventListener("click", () => {
