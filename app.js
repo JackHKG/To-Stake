@@ -18,12 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
             (hour === 23);
 
         if (isOpen) {
-        
+            stakeBtn.disabled = false;
+            statusDiv.textContent = "Stake: Open Now";
+            statusDiv.style.color = "green";
+        } else {
             stakeBtn.disabled = true;
-            statusDiv.textContent = "Closed (Only 11AM–12NN & 11PM–12MN)";
+            statusDiv.textContent = "Stake: Closed (Only 11AM–12NN & 11PM–12MN)";
             statusDiv.style.color = "red";
         }
-    
+    }
 
     // Withdraw button – Always open
     withdrawBtn.addEventListener("click", () => {
